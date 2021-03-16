@@ -112,6 +112,14 @@ class PDFFindController {
     this._firstPageCapability.resolve();
   }
 
+  gotoSearchResult(pageIdx, matchIdx, query) {
+    this._offset = {pageIdx, matchIdx: matchIdx-1, wrapped: true}
+    this.executeCommand('findagain', {
+        query,
+        highlightAll: true
+    })
+  }
+
   executeCommand(cmd, state) {
     if (!state) {
       return;
