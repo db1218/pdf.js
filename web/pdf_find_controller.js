@@ -230,6 +230,7 @@ class PDFFindController {
    * @type {string} The (current) normalized search query.
    */
   get _query() {
+    if (!this._state) return "";
     if (this._state.query !== this._rawQuery) {
       this._rawQuery = this._state.query;
       this._normalizedQuery = normalize(this._state.query);
