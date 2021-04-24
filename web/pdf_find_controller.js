@@ -242,7 +242,7 @@ class PDFFindController {
    * @type {string} The (current) normalized search query.
    */
   get _query() {
-    if (this._state.query !== this._rawQuery) {
+    if (this._state && this._state.query !== this._rawQuery) {
       this._rawQuery = this._state.query;
       this._normalizedQuery = normalize(this._state.query);
     }
@@ -557,7 +557,11 @@ class PDFFindController {
         this._pendingFindMatches[i] = true;
         this._extractTextPromises[i].then(pageIdx => {
           delete this._pendingFindMatches[pageIdx];
-          this._calculateMatch(pageIdx);
+          try {
+            this._calculateMatch(pageIdx);
+          } catch {
+            console.error("Could not find next search")
+          }
         });
       }
     }
